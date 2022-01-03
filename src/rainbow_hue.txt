@@ -1,0 +1,26 @@
+#include <Arduino.h>
+#include <FastLED.h>
+
+#define LED_PIN 4
+#define NUM_LEDS 116
+#define CHIPSET WS2812B
+#define COLOR_ORDER GRB
+
+CRGB leds[NUM_LEDS];
+uint8_t hue = 0;
+
+void setup(){
+  FastLED.addLeds<CHIPSET, LED_PIN, COLOR_ORDER>(leds, NUM_LEDS);
+  FastLED.setBrightness(200); /* MAX: 255 */
+}
+
+void loop1(){
+
+for(int i = 0; i < NUM_LEDS; i++){
+  leds[i] = CHSV(hue + (i*10), 255, 255);
+}
+EVERY_N_MILLISECONDS(15){
+  hue++;
+}
+FastLED.show();
+}
